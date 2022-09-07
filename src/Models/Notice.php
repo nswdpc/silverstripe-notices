@@ -43,6 +43,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
      */
     private static $db = [
         'Title' => 'Varchar(255)',
+        'ShowTitle' => 'Boolean',
         'Description' => 'Text',
         'IsGlobal' => 'Boolean',
         'IsActive' => 'Boolean',
