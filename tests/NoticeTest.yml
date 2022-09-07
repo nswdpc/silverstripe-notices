@@ -1,0 +1,38 @@
+gorriecoe\Link\Models\Link:
+  link1:
+    Title: link1
+    Type: URL
+    URL: 'https://example.org'
+    OpenInNewWindow: 0
+  link2:
+    Title: link2
+    Type: URL
+    URL: 'https://example.net'
+    OpenInNewWindow: 0
+  link3:
+    Title: link3
+    Type: URL
+    URL: 'https://example.org'
+    OpenInNewWindow: 1
+NSWDPC\Notices\Notice:
+  standardnotice:
+    Title: Standard Notice
+    Description: Standard Notice Description
+    IsGlobal: 0
+    IsActive: 1
+    IsDismissible: 1
+    Link: =>gorriecoe\Link\Models\Link.link1
+  inactive:
+    Title: Inactive Notice
+    Description: Inactive Notice Description
+    IsGlobal: 0
+    IsActive: 0
+    IsDismissible: 1
+    Link: =>gorriecoe\Link\Models\Link.link2
+  globalnotice:
+    Title: Global Notice
+    Description: Global Notice Description
+    IsGlobal: 1
+    IsActive: 1
+    IsDismissible: 0
+    Link: null

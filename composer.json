@@ -1,0 +1,39 @@
+{
+    "name": "nswdpc/silverstripe-notices",
+    "description": "Simple notices adminisration",
+    "type": "silverstripe-vendormodule",
+    "keywords": [
+        "silverstripe",
+        "notices"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "James",
+            "homepage": "https://dpc.nsw.gov.au",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "silverstripe/admin" : "^1.10.0",
+        "gorriecoe/silverstripe-linkfield": "^1.0.0"
+    },
+    "suggest" : {
+        "nswdpc/silverstripe-schema-specialannouncement" : "Related - schema.org SpecialAnnouncement module"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "^3"
+    },
+    "autoload": {
+        "psr-4": {
+            "NSWDPC\\Notices\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NSWDPC\\Notices\\Tests\\": "tests/"
+        }
+    }
+
+}

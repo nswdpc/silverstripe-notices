@@ -1,0 +1,1 @@
+<meta data-title="{$Title.XML}" data-description="{$Description.XML}" data-autoclose-after="{$AutoCloseAfter.XML}" data-is-dismissible="{$IsDismissible}" data-is-global="{$IsGlobal}" data-is-active="{$IsActive}" data-link="{$Link.LinkURL}" />
