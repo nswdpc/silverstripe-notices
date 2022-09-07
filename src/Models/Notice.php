@@ -26,6 +26,16 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * @var string
      */
+    private static $singular_name = "Notice";
+
+    /**
+     * @var string
+     */
+    private static $plural_name = "Notices";
+
+    /**
+     * @var string
+     */
     private static $table_name = "SiteNotice";
 
     /**
