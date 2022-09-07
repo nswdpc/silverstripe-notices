@@ -16,7 +16,7 @@ class NoticeTest extends SapphireTest
 
     protected $usesDatabase = true;
 
-    protected static $fixure_file = 'NoticeTest.yml';
+    protected static $fixture_file = 'NoticeTest.yml';
 
     public function testIsGlobal() {
         $notice = $this->objFromFixture(Notice::class, 'globalnotice');
