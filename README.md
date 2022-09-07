@@ -26,7 +26,7 @@ Override this template in your project to provide your own notice layout based o
 ## Installation
 
 ```sh
-composer require nswdpc/silverstripe-notice
+composer require nswdpc/silverstripe-notices
 ```
 
 ## License
