@@ -32,5 +32,4 @@ class NoticesAdmin extends ModelAdmin
     private static $managed_models = [
         Notice::class
     ];
-
 }

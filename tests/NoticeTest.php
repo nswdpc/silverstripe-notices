@@ -14,29 +14,32 @@ use SilverStripe\View\SSViewer;
  */
 class NoticeTest extends SapphireTest
 {
-
     protected $usesDatabase = true;
 
     protected static $fixture_file = 'NoticeTest.yml';
 
-    protected function setUp() : void {
+    protected function setUp() : void
+    {
         parent::setUp();
         SSViewer::set_themes(['$public', '$default']);
     }
 
-    public function testIsGlobal() {
+    public function testIsGlobal()
+    {
         $notice = $this->objFromFixture(Notice::class, 'globalnotice');
         $this->assertInstanceOf(Notice::class, $notice);
         $this->assertEquals(1, $notice->IsGlobal);
     }
 
-    public function testIsActive() {
+    public function testIsActive()
+    {
         $notice = $this->objFromFixture(Notice::class, 'inactive');
         $this->assertInstanceOf(Notice::class, $notice);
         $this->assertEquals(0, $notice->IsActive);
     }
 
-    public function testSiteWideNotice() {
+    public function testSiteWideNotice()
+    {
         $sitewideNotice = Notice::get_sitewide_notice();
         $notice = $this->objFromFixture(Notice::class, 'globalnotice');
         $this->assertEquals($notice->ID, $sitewideNotice->ID);
@@ -45,7 +48,8 @@ class NoticeTest extends SapphireTest
     /**
      * Test template for notice with a link
      */
-    public function testTemplate() {
+    public function testTemplate()
+    {
         $notice = $this->objFromFixture(Notice::class, 'withlink');
         $template = $notice->forTemplate();
         $this->assertNotEmpty($template);
@@ -54,7 +58,7 @@ class NoticeTest extends SapphireTest
         $this->assertEquals('meta', $xml->getName());
 
         $linkURL = "";
-        if($link = $notice->Link()) {
+        if ($link = $notice->Link()) {
             $linkURL = $link->getLinkURL();
         }
         $this->assertNotEmpty($linkURL);
@@ -69,8 +73,8 @@ class NoticeTest extends SapphireTest
         ];
 
         $xmlAttributes = $xml->attributes();
-        foreach($xmlAttributes as $k=>$v) {
-            $this->assertEquals( $v->__toString(), $attributes[$k], "Attribute '{$k}' does not match expected value '{$v}'" );
+        foreach ($xmlAttributes as $k=>$v) {
+            $this->assertEquals($v->__toString(), $attributes[$k], "Attribute '{$k}' does not match expected value '{$v}'");
         }
     }
 }
