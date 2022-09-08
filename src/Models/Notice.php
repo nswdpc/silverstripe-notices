@@ -141,7 +141,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
                 ),
                 CheckboxField::create(
                     'IsGlobal',
-                    _t("sitenotice.TITLE", "Site-wide notice")
+                    _t("sitenotice.SITE_WIDE_NOTICE_TITLE", "Site-wide notice")
                 )->setDescription(
                     _t(
                         'sitenotice.ISGLOBAL_DESCRIPTION',
