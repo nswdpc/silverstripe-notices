@@ -19,7 +19,7 @@ class NoticesAdmin extends ModelAdmin
     /**
      * @var string
      */
-    private static $menu_title = 'Notices';
+    private static $menu_title = 'Site notices';
 
     /**
      * @var string
