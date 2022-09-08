@@ -105,6 +105,22 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     }
 
     /**
+     * Return value for use as unique modalId in DOM
+     */
+    public function getModalId() : string {
+        return Convert::raw2url("notice-{$this->ID}");
+    }
+
+    /**
+     * Return value for use as unique modalId in DOM
+     */
+    public function getExtraClass() : string {
+        $extraClasses = [];
+        $this->extend('addExtraClass', $extraClasses);
+        return implode(" ", array_unique($extraClasses));
+    }
+
+    /**
      * @return Fieldlist
      */
     public function getCMSFields()
