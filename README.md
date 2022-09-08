@@ -6,10 +6,10 @@ Simple, unopinionated, module to store notices for use by a project.
 
 A notice contains:
 
-+ A title
++ A title, with 'show title' option
 + Some content (not HTML)
 + A link
-+ A dismissible option, with auto dismiss value
++ A auto dismiss value (seconds)
 + A site-wide option (one allowed)
 + An active option (enabled)
 
