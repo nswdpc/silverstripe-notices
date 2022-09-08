@@ -47,7 +47,6 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
         'Description' => 'Text',
         'IsGlobal' => 'Boolean',
         'IsActive' => 'Boolean',
-        'IsDismissible' => 'Boolean',
         'AutoCloseAfter' => 'Int',// seconds
     ];
 
@@ -58,7 +57,6 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
         'Title' => 'Title',
         'IsActive.Nice' => 'Active?',
         'IsGlobal.Nice' => 'Global?',
-        'IsDismissible.Nice' => 'Dismissible?',
         'Description' => 'Description',
         'AutoCloseAfter' => 'Auto-close (seconds)',
     ];
