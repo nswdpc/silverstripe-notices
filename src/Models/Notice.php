@@ -124,7 +124,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-
+        $fields->removeByName('LinkID');
         $fields->addFieldsToTab(
             'Root.Main',
             [
@@ -161,7 +161,14 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
                     'AutoCloseAfter',
                     _t("sitenotice.AUTOCLOSEAFTER_TITLE", "The notice will disappear after this amount of seconds")
                 )
-                ->setHTML5(true)
+                ->setHTML5(true),
+                LinkField::create(
+                    'Link',
+                    _t("sitenotice.LINK", "Link"),
+                    $this
+                )->setDescription(
+                    _t("sitenotice.LINK_DESCRIPTION", "Adds a link to a notice"),
+                )
             ]
         );
 
