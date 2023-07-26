@@ -1,3 +1,6 @@
 ---
-Name: nswdpc-module-skeleton
+Name: nswdpc-notice-config
 ---
+Page:
+  extensions:
+    - 'NSWDPC\Notices\Extensions\NoticePageExtension'
