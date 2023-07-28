@@ -12,8 +12,22 @@
             "name": "James",
             "homepage": "https://dpc.nsw.gov.au",
             "role": "Developer"
+        },
+        {
+            "name": "Mark Taylor",
+            "homepage": "https://dpc.nsw.gov.au",
+            "role": "Bon Vivant"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "NSWDPC\\Utilities\\ContentSecurityPolicy\\": [
+                "src/Controllers",
+                "src/Extensions",
+                "src/Models"
+            ]
+        }
+    },
     "require": {
         "silverstripe/admin" : "^1.10.0",
         "gorriecoe/silverstripe-linkfield": "^1.0.0"
