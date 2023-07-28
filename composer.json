@@ -16,7 +16,7 @@
     ],
     "require": {
         "silverstripe/admin" : "^2",
-        "gorriecoe/silverstripe-linkfield": "*"
+        "gorriecoe/silverstripe-linkfield": "^1.1"
     },
     "suggest" : {
         "nswdpc/silverstripe-schema-specialannouncement" : "Related - schema.org SpecialAnnouncement module"
