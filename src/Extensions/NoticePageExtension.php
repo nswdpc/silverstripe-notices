@@ -1,8 +1,7 @@
 <?php
 
-namespace NSWDPC\Notices\Extensions;
+namespace NSWDPC\Notices;
 
-use Page;
 use Silverstripe\ORM\DataExtension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Admin\AdminRootController;
@@ -21,7 +20,7 @@ class NoticePageExtension extends DataExtension
      * @var array
      */
     private static $has_one = [
-        'Notice' => Notice::class
+        'PageNotice' => Notice::class
     ];
 
     /**
@@ -29,17 +28,28 @@ class NoticePageExtension extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        $noticeAdminLink = AdminRootController::admin_url() . Config::inst()->get('NSWDPC\Notices\NoticesAdmin', 'url_segment');
-
         $fields->addFieldsToTab('Root.Notice', [
             DropdownField::create(
-                'NoticeID',
-                _t('nswds.NOTICE','Notice'),
-                Notice::get()->map('ID', 'Title')
+                'PageNoticeID',
+                _t('nswds.NOTICE','Page notice'),
+                $this->getPageNotices()->map('ID', 'Title')
             )
             ->setEmptyString('Choose an existing notice')
-            ->setDescription("<a href=\"$noticeAdminLink\">Manage notices</a>")
         ]);
+    }
+
+    /**
+     * Return available notices
+     * @return Notice|null
+     */
+    public function getPageNotices()
+    {
+        $notices = Notice::get()->filter([
+            'IsGlobal' => 0,
+            'IsActive' => 1
+        ]);
+
+        return $notices->sort('Title');
     }
 
 }
