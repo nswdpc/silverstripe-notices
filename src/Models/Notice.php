@@ -12,6 +12,8 @@ use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\TextField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Assets\Image;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 use SilverStripe\View\TemplateGlobalProvider;
@@ -65,6 +67,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
      * @var array
      */
     private static $has_one = [
+        'Image' => Image::class,
         'Link' => Link::class
     ];
 
@@ -72,6 +75,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
      * @var array
      */
     private static $owns = [
+        'Image',
         'Link'
     ];
 
@@ -164,6 +168,11 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
                     _t("sitenotice.AUTOCLOSEAFTER_TITLE", "The notice will disappear after this amount of seconds")
                 )
                 ->setHTML5(true),
+                UploadField::create(
+                    'Image',
+                    _t('sitenotice.IMAGE', 'Add an image to a notice')
+                )
+                ->setIsMultiUpload(false),
                 LinkField::create(
                     'Link',
                     _t("sitenotice.LINK", "Link"),
