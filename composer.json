@@ -27,11 +27,10 @@
     },
     "autoload": {
         "psr-4": {
-            "NSWDPC\\Notices\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
+            "NSWDPC\\Notices\\": [
+                "src/Controllers/",
+                "src/Models/"
+            ],
             "NSWDPC\\Notices\\Tests\\": "tests/"
         }
     }
