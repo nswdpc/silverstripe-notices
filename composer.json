@@ -19,15 +19,6 @@
             "role": "Bon Vivant"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "NSWDPC\\Utilities\\ContentSecurityPolicy\\": [
-                "src/Controllers",
-                "src/Extensions",
-                "src/Models"
-            ]
-        }
-    },
     "require": {
         "silverstripe/admin" : "^1.10.0",
         "gorriecoe/silverstripe-linkfield": "^1.0.0"
@@ -43,6 +34,7 @@
         "psr-4": {
             "NSWDPC\\Notices\\": [
                 "src/Controllers/",
+                "src/Extensions/",
                 "src/Models/"
             ],
             "NSWDPC\\Notices\\Tests\\": "tests/"
