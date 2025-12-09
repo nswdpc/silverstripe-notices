@@ -233,6 +233,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * Render this object into this template
      */
+    #[\Override]
     public function forTemplate(): string
     {
         return $this->renderWith(Notice::class);
