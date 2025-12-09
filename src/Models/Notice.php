@@ -120,9 +120,6 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
         return implode(" ", array_unique($extraClasses));
     }
 
-    /**
-     * @return Fieldlist
-     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
