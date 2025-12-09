@@ -2,7 +2,6 @@
 
 namespace NSWDPC\Notices\Tests;
 
-use gorriecoe\LinkField\LinkField;
 use gorriecoe\Link\Models\Link;
 use NSWDPC\Notices\Notice;
 use SilverStripe\Dev\SapphireTest;
@@ -19,7 +18,7 @@ class NoticeTest extends SapphireTest
     protected static $fixture_file = 'NoticeTest.yml';
 
     #[\Override]
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         SSViewer::set_themes(['$public', '$default']);
@@ -75,7 +74,7 @@ class NoticeTest extends SapphireTest
         ];
 
         $xmlAttributes = $xml->attributes();
-        foreach ($xmlAttributes as $k=>$v) {
+        foreach ($xmlAttributes as $k => $v) {
             $this->assertEquals($v->__toString(), $attributes[$k], "Attribute '{$k}' does not match expected value '{$v}'");
         }
     }

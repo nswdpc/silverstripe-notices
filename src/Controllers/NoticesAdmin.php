@@ -10,7 +10,6 @@ use SilverStripe\Admin\ModelAdmin;
  */
 class NoticesAdmin extends ModelAdmin
 {
-
     private static string $url_segment = 'site-notices';
 
     private static string $menu_title = 'Site notices';

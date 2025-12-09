@@ -5,7 +5,6 @@ namespace NSWDPC\Notices;
 use gorriecoe\LinkField\LinkField;
 use gorriecoe\Link\Models\Link;
 use SilverStripe\Core\Convert;
-use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\Forms\TextareaField;
@@ -30,7 +29,6 @@ use SilverStripe\View\TemplateGlobalProvider;
  */
 class Notice extends DataObject implements PermissionProvider, TemplateGlobalProvider
 {
-
     private static string $singular_name = "Notice";
 
     private static string $plural_name = "Notices";
@@ -87,7 +85,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * Return value for use as unique modalId in DOM
      */
-    public function getModalId() : string
+    public function getModalId(): string
     {
         return Convert::raw2url("notice-{$this->ID}");
     }
@@ -95,7 +93,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * Return value for use as unique modalId in DOM
      */
-    public function getExtraClass() : string
+    public function getExtraClass(): string
     {
         $extraClasses = [];
         $this->extend('addExtraClass', $extraClasses);
@@ -243,7 +241,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * Return the site-wide notice
      */
-    public static function get_sitewide_notice() : ?Notice
+    public static function get_sitewide_notice(): ?Notice
     {
         $notices = Notice::get();
         $notices = $notices->filter([
