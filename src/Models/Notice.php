@@ -90,7 +90,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     {
         parent::onAfterWrite();
         if ($this->IsGlobal == 1) {
-            DB::query("UPDATE `SiteNotice` SET IsGlobal = 0 WHERE ID <> '" . Convert::raw2sql($this->ID) . "'");
+            DB::prepared_query("UPDATE \"SiteNotice\" SET IsGlobal = 0 WHERE ID <> ?", [$this->ID]);
         }
     }
 
