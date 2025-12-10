@@ -10,26 +10,13 @@ use SilverStripe\Admin\ModelAdmin;
  */
 class NoticesAdmin extends ModelAdmin
 {
+    private static string $url_segment = 'site-notices';
 
-    /**
-     * @var string
-     */
-    private static $url_segment = 'site-notices';
+    private static string $menu_title = 'Site notices';
 
-    /**
-     * @var string
-     */
-    private static $menu_title = 'Site notices';
+    private static string $menu_icon_class = 'font-icon-comment';
 
-    /**
-     * @var string
-     */
-    private static $menu_icon_class = 'font-icon-comment';
-
-    /**
-     * @var array
-     */
-    private static $managed_models = [
+    private static array $managed_models = [
         Notice::class
     ];
 }

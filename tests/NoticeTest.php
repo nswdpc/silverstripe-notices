@@ -2,7 +2,6 @@
 
 namespace NSWDPC\Notices\Tests;
 
-use gorriecoe\LinkField\LinkField;
 use gorriecoe\Link\Models\Link;
 use NSWDPC\Notices\Notice;
 use SilverStripe\Dev\SapphireTest;
@@ -18,27 +17,28 @@ class NoticeTest extends SapphireTest
 
     protected static $fixture_file = 'NoticeTest.yml';
 
-    protected function setUp() : void
+    #[\Override]
+    protected function setUp(): void
     {
         parent::setUp();
         SSViewer::set_themes(['$public', '$default']);
     }
 
-    public function testIsGlobal()
+    public function testIsGlobal(): void
     {
         $notice = $this->objFromFixture(Notice::class, 'globalnotice');
         $this->assertInstanceOf(Notice::class, $notice);
         $this->assertEquals(1, $notice->IsGlobal);
     }
 
-    public function testIsActive()
+    public function testIsActive(): void
     {
         $notice = $this->objFromFixture(Notice::class, 'inactive');
         $this->assertInstanceOf(Notice::class, $notice);
         $this->assertEquals(0, $notice->IsActive);
     }
 
-    public function testSiteWideNotice()
+    public function testSiteWideNotice(): void
     {
         $sitewideNotice = Notice::get_sitewide_notice();
         $notice = $this->objFromFixture(Notice::class, 'globalnotice');
@@ -48,12 +48,12 @@ class NoticeTest extends SapphireTest
     /**
      * Test template for notice with a link
      */
-    public function testTemplate()
+    public function testTemplate(): void
     {
         $notice = $this->objFromFixture(Notice::class, 'withlink');
         $template = $notice->forTemplate();
         $this->assertNotEmpty($template);
-        $xml = simplexml_load_string($template);
+        $xml = simplexml_load_string((string) $template);
         $this->assertInstanceof(\SimpleXMLElement::class, $xml);
         $this->assertEquals('meta', $xml->getName());
 
@@ -61,6 +61,7 @@ class NoticeTest extends SapphireTest
         if ($link = $notice->Link()) {
             $linkURL = $link->getLinkURL();
         }
+
         $this->assertNotEmpty($linkURL);
         $attributes = [
             "data-title" => $notice->Title,
@@ -73,7 +74,7 @@ class NoticeTest extends SapphireTest
         ];
 
         $xmlAttributes = $xml->attributes();
-        foreach ($xmlAttributes as $k=>$v) {
+        foreach ($xmlAttributes as $k => $v) {
             $this->assertEquals($v->__toString(), $attributes[$k], "Attribute '{$k}' does not match expected value '{$v}'");
         }
     }

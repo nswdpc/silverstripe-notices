@@ -5,7 +5,6 @@ namespace NSWDPC\Notices;
 use gorriecoe\LinkField\LinkField;
 use gorriecoe\Link\Models\Link;
 use SilverStripe\Core\Convert;
-use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
 use SilverStripe\Forms\TextareaField;
@@ -19,29 +18,24 @@ use SilverStripe\View\TemplateGlobalProvider;
 /**
  * Provides a Notice model
  * @author James
+ * @property string $Title
+ * @property bool $ShowTitle
+ * @property ?string $Description
+ * @property bool $IsGlobal
+ * @property bool $IsActive
+ * @property int $AutoCloseAfter
+ * @property int $LinkID
+ * @method \gorriecoe\Link\Models\Link Link()
  */
 class Notice extends DataObject implements PermissionProvider, TemplateGlobalProvider
 {
+    private static string $singular_name = "Notice";
 
-    /**
-     * @var string
-     */
-    private static $singular_name = "Notice";
+    private static string $plural_name = "Notices";
 
-    /**
-     * @var string
-     */
-    private static $plural_name = "Notices";
+    private static string $table_name = "SiteNotice";
 
-    /**
-     * @var string
-     */
-    private static $table_name = "SiteNotice";
-
-    /**
-     * @var array
-     */
-    private static $db = [
+    private static array $db = [
         'Title' => 'Varchar(255)',
         'ShowTitle' => 'Boolean',
         'Description' => 'Text',
@@ -50,10 +44,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
         'AutoCloseAfter' => 'Int',// seconds
     ];
 
-    /**
-     * @var array
-     */
-    private static $summary_fields = [
+    private static array $summary_fields = [
         'Title' => 'Title',
         'IsActive.Nice' => 'Active?',
         'IsGlobal.Nice' => 'Global?',
@@ -61,24 +52,15 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
         'AutoCloseAfter' => 'Auto-close (seconds)',
     ];
 
-    /**
-     * @var array
-     */
-    private static $has_one = [
+    private static array $has_one = [
         'Link' => Link::class
     ];
 
-    /**
-     * @var array
-     */
-    private static $owns = [
+    private static array $owns = [
         'Link'
     ];
 
-    /**
-     * @var array
-     */
-    private static $indexes = [
+    private static array $indexes = [
         'IsGlobal' => true,
         'IsActive' => true
     ];
@@ -86,18 +68,16 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * Post-write operations
      */
+    #[\Override]
     public function onAfterWrite()
     {
         parent::onAfterWrite();
         if ($this->IsGlobal == 1) {
-            DB::query("UPDATE `SiteNotice` SET IsGlobal = 0 WHERE ID <> '" . Convert::raw2sql($this->ID) . "'");
+            DB::prepared_query('UPDATE "SiteNotice" SET IsGlobal = 0 WHERE ID <> ?', [$this->ID]);
         }
     }
 
-    /**
-     * @return string
-     */
-    public function TitleWithGlobalStatus()
+    public function TitleWithGlobalStatus(): string
     {
         return $this->Title . ($this->IsGlobal == 1 ? " (" . _t('sitenotice.GLOBAL', 'global') . ")" : "");
     }
@@ -105,7 +85,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * Return value for use as unique modalId in DOM
      */
-    public function getModalId() : string
+    public function getModalId(): string
     {
         return Convert::raw2url("notice-{$this->ID}");
     }
@@ -113,16 +93,14 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * Return value for use as unique modalId in DOM
      */
-    public function getExtraClass() : string
+    public function getExtraClass(): string
     {
         $extraClasses = [];
         $this->extend('addExtraClass', $extraClasses);
         return implode(" ", array_unique($extraClasses));
     }
 
-    /**
-     * @return Fieldlist
-     */
+    #[\Override]
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -180,6 +158,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * @return bool
      */
+    #[\Override]
     public function canView($member = null)
     {
         return true;
@@ -188,6 +167,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * @return bool
      */
+    #[\Override]
     public function canEdit($member = null)
     {
         return Permission::check('SITENOTICE_EDIT');
@@ -196,6 +176,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * @return bool
      */
+    #[\Override]
     public function canDelete($member = null)
     {
         return Permission::check('SITENOTICE_DELETE');
@@ -204,6 +185,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * @return bool
      */
+    #[\Override]
     public function canCreate($member = null, $context = [])
     {
         return Permission::check('SITENOTICE_CREATE');
@@ -258,9 +240,8 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
 
     /**
      * Return the site-wide notice
-     * @return Notice|null
      */
-    public static function get_sitewide_notice() : ?Notice
+    public static function get_sitewide_notice(): ?Notice
     {
         $notices = Notice::get();
         $notices = $notices->filter([
