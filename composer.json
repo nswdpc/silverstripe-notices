@@ -13,19 +13,9 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/nswdpc/silverstripe-linkfield.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/nswdpc/silverstripe-link.git"
-        }
-    ],
     "require": {
         "silverstripe/admin" : "^3",
-        "gorriecoe/silverstripe-linkfield": "dev-ss6"
+        "nswdpc/silverstripe-linkfield": "^2"
     },
     "suggest" : {
         "nswdpc/silverstripe-schema-specialannouncement" : "Related - schema.org SpecialAnnouncement module"
