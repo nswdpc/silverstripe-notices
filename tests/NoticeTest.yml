@@ -44,6 +44,7 @@ NSWDPC\Notices\Notice:
   withlink:
     Title: With link
     Description: With link Description
+    ShowTitle: 1
     IsGlobal: 0
     IsActive: 0
     IsDismissible: 0
