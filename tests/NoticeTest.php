@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NSWDPC\Notices\Tests;
 
 use gorriecoe\Link\Models\Link;
@@ -65,11 +67,11 @@ class NoticeTest extends SapphireTest
         $this->assertNotEmpty($linkURL);
         $attributes = [
             "data-title" => $notice->Title,
-            "data-show-title" => strval($notice->ShowTitle == 1 ? 1 : 0),
+            "data-show-title" => strval($notice->ShowTitle == 1 ? 1 : ''),
             "data-description" => $notice->Description,
             "data-autoclose-after" => $notice->AutoCloseAfter,
-            "data-is-global" => strval($notice->IsGlobal == 1 ? 1 : 0),
-            "data-is-active" => strval($notice->IsActive == 1 ? 1 : 0),
+            "data-is-global" => strval($notice->IsGlobal == 1 ? 1 : ''),
+            "data-is-active" => strval($notice->IsActive == 1 ? 1 : ''),
             "data-link" => $linkURL
         ];
 
