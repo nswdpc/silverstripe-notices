@@ -28,7 +28,9 @@ use SilverStripe\View\TemplateGlobalProvider;
  * @property int $AutoCloseAfter
  * @property int $LinkID
  * @method \gorriecoe\Link\Models\Link Link()
- * @method \SilverStripe\LinkField\Models\Link Link()
+ * @method \gorriecoe\Link\Models\Link Link()
+ * @property int $CoreLinkID
+ * @method \SilverStripe\LinkField\Models\Link CoreLink()
  */
 class Notice extends DataObject implements PermissionProvider, TemplateGlobalProvider
 {
