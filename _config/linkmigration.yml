@@ -1,0 +1,9 @@
+---
+Name: nswdpc-notices-linkmigration
+Only:
+  classexists: 'gorriecoe\LinkField\Migration\LinkMigrator'
+---
+gorriecoe\LinkField\Migration\LinkMigrator:
+  relation_map:
+    NSWDPC\Notices\Notice:
+      Link: CoreLink
