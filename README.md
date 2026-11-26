@@ -13,6 +13,18 @@ A notice contains:
 + A site-wide option (one allowed)
 + An active option (enabled)
 
+## Link migration
+
+This version includes [staged migration of links](https://github.com/nswdpc/silverstripe-linkfield/blob/feat-link-migrator-staged/docs/en/migration.md) to the core Silverstripe Link model.
+
+1. *Important*: Update all calls to `$Link`/`getLink()`/`Link()` in your project  to `$DerivedLink`/`getDerivedLink()`/`DerivedLink()`
+2. Once the above change is available on your site, in the "Link migration" admin section any existing links will show with a  "Migrate" button
+3. Hit the "Migrate" button
+4. Records will migrate to the core Silverstripe Link model and the element interface will display the core Silverstripe link field once the element is republished.
+5. Template usage on site frontend will pick up the new, core, link.
+
+The next major release of this module will remove dependency of `nswdpc/silverstripe-linkfield` and legacy linkfield implementation.
+
 ## Permissions
 
 The module adds permissions for view/add/edit/delete

@@ -2,8 +2,10 @@
 
 namespace NSWDPC\Notices;
 
-use gorriecoe\LinkField\LinkField;
 use gorriecoe\Link\Models\Link;
+use gorriecoe\LinkField\LinkField;
+use SilverStripe\LinkField\Models\Link as CoreLink;
+use SilverStripe\LinkField\Form\LinkField as CoreLinkField;
 use SilverStripe\Core\Convert;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\DB;
@@ -26,6 +28,9 @@ use SilverStripe\View\TemplateGlobalProvider;
  * @property int $AutoCloseAfter
  * @property int $LinkID
  * @method \gorriecoe\Link\Models\Link Link()
+ * @method \gorriecoe\Link\Models\Link Link()
+ * @property int $CoreLinkID
+ * @method \SilverStripe\LinkField\Models\Link CoreLink()
  */
 class Notice extends DataObject implements PermissionProvider, TemplateGlobalProvider
 {
@@ -53,11 +58,21 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     ];
 
     private static array $has_one = [
-        'Link' => Link::class
+        'Link' => Link::class,
+        'CoreLink' => CoreLink::class
     ];
 
     private static array $owns = [
-        'Link'
+        'Link',
+        'CoreLink'
+    ];
+
+    private static array $cascade_deletes = [
+        'CoreLink'
+    ];
+
+    private static array $cascade_duplicates = [
+        'CoreLink'
     ];
 
     private static array $indexes = [
@@ -142,13 +157,7 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
                     _t("sitenotice.AUTOCLOSEAFTER_TITLE", "The notice will disappear after this amount of seconds")
                 )
                 ->setHTML5(true),
-                LinkField::create(
-                    'Link',
-                    _t("sitenotice.LINK", "Link"),
-                    $this
-                )->setDescription(
-                    _t("sitenotice.LINK_DESCRIPTION", "Adds a link to a notice"),
-                )
+                $this->getLinkField()
             ]
         );
 
@@ -263,5 +272,46 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
         return [
             'SitewideNotice' => 'get_sitewide_notice'
         ];
+    }
+
+    /**
+     * Return the field used to render the link
+     * based on migration state
+     */
+    protected function getLinkField(): CoreLinkField|LinkField
+    {
+        $link = $this->getDerivedLink();
+        if ($link instanceof CoreLink) {
+            return CoreLinkField::create('CoreLink', _t(self::class . 'LINK', 'Link'))->setDescription(
+                _t("sitenotice.LINK_DESCRIPTION", "Adds a link to a notice")
+            );
+        }
+
+        return LinkField::create('Link', _t(self::class . 'LINK', 'Link'), $this)->setDescription(
+            _t("sitenotice.LINK_DESCRIPTION", "Adds a link to a notice")
+        );
+    }
+
+    /**
+     * Template method
+     */
+    public function DerivedLink(): CoreLink|Link
+    {
+        return $this->getDerivedLink();
+    }
+
+    /**
+     * Returns the relevant link based on migration status
+     */
+    public function getDerivedLink(): CoreLink|Link
+    {
+        $coreLink = $this->CoreLink();
+        /** @var Link $legacyLink */
+        $legacyLink = $this->getComponent('Link');
+        if ($coreLink->isInDB() || !$legacyLink->isInDB()) {
+            return $coreLink;
+        }
+
+        return $legacyLink;
     }
 }
