@@ -2,8 +2,6 @@
 
 namespace NSWDPC\Notices;
 
-use gorriecoe\Link\Models\Link;
-use gorriecoe\LinkField\LinkField;
 use SilverStripe\LinkField\Models\Link as CoreLink;
 use SilverStripe\LinkField\Form\LinkField as CoreLinkField;
 use SilverStripe\Core\Convert;
@@ -26,9 +24,6 @@ use SilverStripe\View\TemplateGlobalProvider;
  * @property bool $IsGlobal
  * @property bool $IsActive
  * @property int $AutoCloseAfter
- * @property int $LinkID
- * @method \gorriecoe\Link\Models\Link Link()
- * @method \gorriecoe\Link\Models\Link Link()
  * @property int $CoreLinkID
  * @method \SilverStripe\LinkField\Models\Link CoreLink()
  */
@@ -58,12 +53,10 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     ];
 
     private static array $has_one = [
-        'Link' => Link::class,
         'CoreLink' => CoreLink::class
     ];
 
     private static array $owns = [
-        'Link',
         'CoreLink'
     ];
 
@@ -119,7 +112,6 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-        $fields->removeByName('LinkID');
         $fields->addFieldsToTab(
             'Root.Main',
             [
@@ -278,24 +270,18 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
      * Return the field used to render the link
      * based on migration state
      */
-    protected function getLinkField(): CoreLinkField|LinkField
+    protected function getLinkField(): CoreLinkField
     {
-        $link = $this->getDerivedLink();
-        if ($link instanceof CoreLink) {
-            return CoreLinkField::create('CoreLink', _t(self::class . 'LINK', 'Link'))->setDescription(
+        return CoreLinkField::create('CoreLink', _t(self::class . 'LINK', 'Link'))
+            ->setDescription(
                 _t("sitenotice.LINK_DESCRIPTION", "Adds a link to a notice")
             );
-        }
-
-        return LinkField::create('Link', _t(self::class . 'LINK', 'Link'), $this)->setDescription(
-            _t("sitenotice.LINK_DESCRIPTION", "Adds a link to a notice")
-        );
     }
 
     /**
      * Template method
      */
-    public function DerivedLink(): CoreLink|Link
+    public function DerivedLink(): ?CoreLink
     {
         return $this->getDerivedLink();
     }
@@ -303,15 +289,16 @@ class Notice extends DataObject implements PermissionProvider, TemplateGlobalPro
     /**
      * Returns the relevant link based on migration status
      */
-    public function getDerivedLink(): CoreLink|Link
+    public function getDerivedLink(): ?CoreLink
     {
-        $coreLink = $this->CoreLink();
-        /** @var Link $legacyLink */
-        $legacyLink = $this->getComponent('Link');
-        if ($coreLink->isInDB() || !$legacyLink->isInDB()) {
-            return $coreLink;
-        }
+        return $this->CoreLink();
+    }
 
-        return $legacyLink;
+    /**
+     * Compatibility method
+     */
+    public function Link(): ?CoreLink
+    {
+        return $this->getDerivedLink();
     }
 }

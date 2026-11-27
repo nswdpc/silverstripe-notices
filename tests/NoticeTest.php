@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NSWDPC\Notices\Tests;
 
-use gorriecoe\Link\Models\Link;
 use NSWDPC\Notices\Notice;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\View\SSViewer;
@@ -60,8 +59,8 @@ class NoticeTest extends SapphireTest
         $this->assertEquals('meta', $xml->getName());
 
         $linkURL = "";
-        if ($link = $notice->Link()) {
-            $linkURL = $link->getLinkURL();
+        if ($link = $notice->CoreLink()) {
+            $linkURL = $link->getURL();
         }
 
         $this->assertNotEmpty($linkURL);

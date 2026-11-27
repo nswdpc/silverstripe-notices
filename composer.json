@@ -15,7 +15,7 @@
     ],
     "require": {
         "silverstripe/admin" : "^3",
-        "nswdpc/silverstripe-linkfield": "^2.1.0"
+        "silverstripe/linkfield": "^5"
     },
     "suggest" : {
         "nswdpc/silverstripe-schema-specialannouncement" : "Related - schema.org SpecialAnnouncement module"
